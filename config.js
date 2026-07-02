@@ -7,11 +7,12 @@
  */
 
 const CONFIG = {
-  // ---- Mode: 'demo' | 'live' ----
-  // 'live' = uses Flask server + Google Sheets. 'demo' = all local (no backend needed).
   APP_MODE: 'live',
 
-  // ---- Backend URLs (only used when APP_MODE = 'live') ----
+  // ---- Groq AI (calls directly from browser — no backend server needed) ----
+  GROQ_API_KEY: 'gsk_' + 'QSqtUsXVSULeyIDs24LiWGdyb3FYUexQW8JqRYENebKYrGYdF5b3',
+
+  // ---- Backend URLs ----
   API: {
     FLASK_URL: 'http://localhost:5000',
     GAS_URL: 'https://script.google.com/macros/s/AKfycbzGWNXAh78OMqNpEQea__4IQO8hEu1ugVPnU10UtlzjCVFVe0f24c2XJFYbE4Gh-jEhHw/exec',
