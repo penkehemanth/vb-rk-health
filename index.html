@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RK Health - Your Care Companion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ====== LOADING SCREEN ====== -->
+<div id="loadingScreen">
+  <div class="loader-pulse">
+    <i class="fas fa-heartbeat"></i>
+  </div>
+  <p class="loader-text">RK Health</p>
+  <div class="loader-bar"><div></div></div>
+</div>
+
+<!-- ====== LOGIN PAGE ====== -->
+<div id="loginPage" class="page active">
+  <div id="threeContainer" class="login-3d-bg"></div>
+  <div class="login-overlay"></div>
+  <div class="login-content">
+    <div class="login-brand">
+      <div class="brand-icon"><i class="fas fa-heartbeat"></i></div>
+      <h1>RK Health</h1>
+      <p class="tagline">Your Care Companion</p>
+    </div>
+    <div class="login-card glass">
+      <!-- Login Form -->
+      <div id="loginFormContainer">
+        <div class="login-mode-tabs">
+          <button class="mode-tab active" data-mode="patient" onclick="setLoginMode('patient')"><i class="fas fa-user"></i> Patient</button>
+          <button class="mode-tab" data-mode="doctor" onclick="setLoginMode('doctor')"><i class="fas fa-user-md"></i> Doctor</button>
+        </div>
+        <h2 id="loginTitle">Welcome Back</h2>
+        <p class="login-sub" id="loginSub">Sign in to manage your health journey</p>
+        <form id="loginForm">
+          <div class="input-group">
+            <i class="fas fa-user"></i>
+            <input type="text" id="loginUser" placeholder="Username" required autocomplete="off">
+          </div>
+          <div class="input-group">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="loginPass" placeholder="Password" required>
+          </div>
+          <button type="submit" class="btn-primary btn-full">
+            <span id="loginBtnText">Sign In</span>
+            <i class="fas fa-arrow-right"></i>
+          </button>
+        </form>
+        <div id="patientAuthToggle">
+          <p class="auth-toggle-text">Don't have an account? <a href="#" onclick="showRegister()">Create one</a></p>
+          <p class="demo-hint"><i class="fas fa-info-circle"></i> Admin: <strong>admin</strong> / <strong>admin123</strong> &nbsp;|&nbsp; User: <strong>demo</strong> / <strong>demo123</strong></p>
+        </div>
+        <div id="doctorAuthHint" style="display:none">
+          <p class="demo-hint"><i class="fas fa-info-circle"></i> Doctor accounts are created by hospital admin. Ask your admin for credentials.</p>
+        </div>
+      </div>
+
+      <!-- Register Form -->
+      <div id="registerFormContainer" style="display:none">
+        <h2>Create Account</h2>
+        <p class="login-sub">Start your health tracking journey</p>
+        <form id="registerForm">
+          <div class="input-group">
+            <i class="fas fa-user"></i>
+            <input type="text" id="regUser" placeholder="Choose a username" required autocomplete="off">
+          </div>
+          <div class="input-group">
+            <i class="fas fa-envelope"></i>
+            <input type="email" id="regEmail" placeholder="Email (optional)" autocomplete="off">
+          </div>
+          <div class="input-group">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="regPass" placeholder="Password (min 4 chars)" required minlength="4">
+          </div>
+          <div class="input-group">
+            <i class="fas fa-check-circle"></i>
+            <input type="password" id="regPassConfirm" placeholder="Confirm password" required>
+          </div>
+          <button type="submit" class="btn-primary btn-full">
+            <span>Create Account</span>
+            <i class="fas fa-user-plus"></i>
+          </button>
+        </form>
+        <p class="auth-toggle-text">Already have an account? <a href="#" onclick="showLogin()">Sign in</a></p>
+      </div>
+
+      <p class="trust-note"><i class="fas fa-shield-alt"></i> Private records, simple care tracking</p>
+    </div>
+    <p class="safety-note">RK Health provides guidance and organization support, not medical diagnosis or emergency care.</p>
+  </div>
+</div>
+
+<!-- ====== MAIN APP ====== -->
+<div id="appContainer" class="app-container">
+
+  <!-- Sidebar -->
+  <nav id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo"><i class="fas fa-heartbeat"></i> RK Health</div>
+    </div>
+    <ul class="sidebar-nav">
+      <li><a href="#" data-page="dashboard" class="active"><i class="fas fa-th-large"></i><span>Dashboard</span></a></li>
+      <li><a href="#" data-page="appointments"><i class="fas fa-calendar-check"></i><span>Appointments</span></a></li>
+      <li><a href="#" data-page="medications"><i class="fas fa-pills"></i><span>Medications</span></a></li>
+      <li><a href="#" data-page="chatbot"><i class="fas fa-robot"></i><span>AI Assistant</span></a></li>
+      <li><a href="#" data-page="reports"><i class="fas fa-file-medical-alt"></i><span>Reports</span></a></li>
+      <li><a href="#" data-page="doctors"><i class="fas fa-user-md"></i><span>Manage Doctors</span></a></li>
+    </ul>
+    <div class="sidebar-footer">
+      <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main id="mainContent" class="main-content">
+
+    <!-- Top Bar -->
+    <header class="topbar">
+      <button id="menuToggle" class="menu-toggle"><i class="fas fa-bars"></i></button>
+      <div class="topbar-title">
+        <h2 id="pageTitle">Dashboard</h2>
+        <span id="dateDisplay"></span>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn-icon notif-bell" id="notifBell" onclick="toggleNotifPanel()">
+          <i class="fas fa-bell"></i>
+          <span id="notifBadge" class="notif-badge">0</span>
+        </button>
+        <button class="btn-icon" id="themeToggle"><i class="fas fa-moon"></i></button>
+        <div class="user-avatar" id="userAvatar" onclick="toggleProfile()"><i class="fas fa-user"></i></div>
+        <div id="profilePopup" class="profile-popup glass">
+          <div id="profileHeader" class="profile-header"></div>
+          <div id="profileBody" class="profile-body"></div>
+          <div class="profile-footer"><button class="btn-sm btn-primary" onclick="navigateTo('reports');closeProfile()" style="width:100%;justify-content:center"><i class="fas fa-file-alt"></i> View Full Report</button></div>
+        </div>
+        <div id="notifPanel" class="notif-panel glass">
+          <div class="notif-panel-header"><h4><i class="fas fa-bell"></i> Notifications</h4><button class="btn-icon" onclick="clearNotifs()" title="Clear all"><i class="fas fa-trash-alt"></i></button></div>
+          <div id="notifList" class="notif-list"><p class="empty-state">No notifications</p></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ====== DASHBOARD PAGE ====== -->
+    <section id="page-dashboard" class="page-section active">
+      <div class="summary-cards">
+        <div class="card glass summary-card" style="--card-delay:0">
+          <div class="card-icon teal"><i class="fas fa-calendar-day"></i></div>
+          <div class="card-info"><h3 id="apptCount">0</h3><p>Appointments Today</p></div>
+        </div>
+        <div class="card glass summary-card" style="--card-delay:1">
+          <div class="card-icon blue"><i class="fas fa-pills"></i></div>
+          <div class="card-info"><h3 id="medCount">0</h3><p>Medicines Pending</p></div>
+        </div>
+        <div class="card glass summary-card" style="--card-delay:2">
+          <div class="card-icon green"><i class="fas fa-file-alt"></i></div>
+          <div class="card-info"><h3 id="reportCount">0</h3><p>Reports Generated</p></div>
+        </div>
+        <div class="card glass summary-card" style="--card-delay:3">
+          <div class="card-icon purple"><i class="fas fa-robot"></i></div>
+          <div class="card-info"><h3 id="summaryCount">0</h3><p>AI Summaries</p></div>
+        </div>
+      </div>
+
+      <div class="quick-actions">
+        <button class="qa-btn" onclick="navigateTo('appointments')"><i class="fas fa-plus-circle"></i> Add Appointment</button>
+        <button class="qa-btn" onclick="navigateTo('medications')"><i class="fas fa-plus-circle"></i> Add Medicine</button>
+        <button class="qa-btn" onclick="navigateTo('chatbot')"><i class="fas fa-comment-dots"></i> Ask AI</button>
+        <button class="qa-btn" onclick="navigateTo('reports')"><i class="fas fa-download"></i> Export Report</button>
+      </div>
+
+      <div class="dash-grid">
+        <div class="card glass timeline-card">
+          <div class="card-header"><h3><i class="fas fa-clock"></i> Recent Activity</h3></div>
+          <div id="timelineList" class="timeline"><p class="empty-state">No recent activity</p></div>
+        </div>
+        <div class="card glass upcoming-card">
+          <div class="card-header"><h3><i class="fas fa-calendar-alt"></i> Upcoming Appointments</h3></div>
+          <div id="upcomingList" class="upcoming-list"><p class="empty-state">No upcoming appointments</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== APPOINTMENTS PAGE ====== -->
+    <section id="page-appointments" class="page-section">
+      <div class="section-header">
+        <p>Manage your doctor visits and schedule</p>
+        <button class="btn-primary" onclick="openModal('appointment')"><i class="fas fa-plus"></i> Add Appointment</button>
+      </div>
+      <div class="filter-bar">
+        <input type="text" id="apptSearch" placeholder="Search appointments..." oninput="renderAppointments()">
+        <select id="apptFilter" onchange="renderAppointments()">
+          <option value="all">All</option>
+          <option value="upcoming">Upcoming</option>
+          <option value="past">Past</option>
+        </select>
+      </div>
+      <div id="appointmentList" class="records-list"></div>
+    </section>
+
+    <!-- ====== MEDICATIONS PAGE ====== -->
+    <section id="page-medications" class="page-section">
+      <div class="section-header">
+        <p>Track your medicines and reminders</p>
+        <button class="btn-primary" onclick="openModal('medication')"><i class="fas fa-plus"></i> Add Medicine</button>
+      </div>
+      <div class="filter-bar">
+        <input type="text" id="medSearch" placeholder="Search medications..." oninput="renderMedications()">
+        <select id="medFilter" onchange="renderMedications()">
+          <option value="all">All</option>
+          <option value="active">Active</option>
+          <option value="completed">Completed</option>
+        </select>
+      </div>
+      <div id="medicationList" class="records-list"></div>
+    </section>
+
+    <!-- ====== CHATBOT PAGE ====== -->
+    <section id="page-chatbot" class="page-section">
+      <div class="section-header">
+        <p>Ask about symptoms, diet plans, or get help</p>
+        <div class="chat-mode-tabs">
+          <button class="mode-btn active" data-mode="general" onclick="setChatMode('general')"><i class="fas fa-comment"></i> General</button>
+          <button class="mode-btn" data-mode="symptom" onclick="setChatMode('symptom')"><i class="fas fa-stethoscope"></i> Symptoms</button>
+          <button class="mode-btn" data-mode="diet" onclick="setChatMode('diet')"><i class="fas fa-utensils"></i> Diet Plan</button>
+        </div>
+      </div>
+      <div class="chat-container glass">
+        <div class="chat-header">
+          <div class="chat-avatar"><i class="fas fa-robot"></i></div>
+          <div>
+            <h4>RK Health Assistant</h4>
+            <span class="chat-status">Online</span>
+          </div>
+          <button class="btn-icon" onclick="clearChat()" title="Clear chat"><i class="fas fa-trash-alt"></i></button>
+        </div>
+        <div id="chatMessages" class="chat-messages"></div>
+        <div class="chat-input-area">
+          <div class="chat-shortcuts" id="chatShortcuts"></div>
+          <div class="chat-input-row">
+            <input type="text" id="chatInput" placeholder="Type your message..." onkeydown="if(event.key==='Enter') sendChatMessage()">
+            <button class="btn-primary btn-send" onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== REPORTS PAGE ====== -->
+    <section id="page-reports" class="page-section">
+      <div class="section-header">
+        <p>View and export your health records</p>
+        <button class="btn-primary" onclick="exportReport()"><i class="fas fa-file-pdf"></i> Export Report</button>
+      </div>
+      <div id="reportContent" class="report-container glass">
+        <div class="report-header">
+          <h2><i class="fas fa-heartbeat"></i> RK Health Report</h2>
+          <p id="reportDate"></p>
+          <p class="safety-note">This report is for personal reference. Share with your doctor for informed care.</p>
+        </div>
+        <div class="report-section">
+          <h3><i class="fas fa-calendar-check"></i> Appointments</h3>
+          <div id="reportAppointments"></div>
+        </div>
+        <div class="report-section">
+          <h3><i class="fas fa-pills"></i> Medications</h3>
+          <div id="reportMedications"></div>
+        </div>
+        <div class="report-section">
+          <h3><i class="fas fa-check-circle"></i> Compliance Status</h3>
+          <div id="reportCompliance"></div>
+        </div>
+        <div class="report-section">
+          <h3><i class="fas fa-robot"></i> AI Visit Summaries</h3>
+          <div id="reportSummaries"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== DOCTORS PAGE ====== -->
+    <section id="page-doctors" class="page-section">
+      <div class="section-header">
+        <p>Manage hospital doctors and their specialties</p>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+          <button class="btn-primary admin-only" onclick="openUserManager()" style="background:linear-gradient(135deg,var(--purple),var(--blue))"><i class="fas fa-users-cog"></i> Manage Users</button>
+          <button class="btn-primary" onclick="openDoctorModal()"><i class="fas fa-plus"></i> Add Doctor</button>
+        </div>
+      </div>
+      <div class="filter-bar">
+        <input type="text" id="doctorSearch" placeholder="Search doctors..." oninput="renderDoctors()">
+        <select id="doctorSpecFilter" onchange="renderDoctors()">
+          <option value="all">All Specialties</option>
+        </select>
+      </div>
+      <div id="doctorStats" class="summary-cards" style="grid-template-columns:repeat(auto-fit,minmax(140px,1fr));margin-bottom:1rem">
+        <div class="card glass summary-card" style="padding:0.75rem 1rem"><div class="card-info"><h3 id="totalDocCount">0</h3><p>Total Doctors</p></div></div>
+        <div class="card glass summary-card" style="padding:0.75rem 1rem"><div class="card-info"><h3 id="specCount">0</h3><p>Specialties</p></div></div>
+      </div>
+      <div id="doctorList" class="records-list"></div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ====== MODAL ====== -->
+<div id="modalOverlay" class="modal-overlay" onclick="if(event.target===this) closeModal()">
+  <div class="modal-content glass" id="modalContent">
+    <div class="modal-header">
+      <h3 id="modalTitle">Modal</h3>
+      <button class="btn-icon" onclick="closeModal()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- ====== TOAST CONTAINER ====== -->
+<div id="toastContainer" class="toast-container"></div>
+
+<!-- Three.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="config.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+# Environment files (API keys, secrets)
+backend/.env
+.env
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# IDE
+.vscode/
+.idea/
