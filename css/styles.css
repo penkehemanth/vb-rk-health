@@ -96,7 +96,7 @@ ul { list-style: none; }
 /* ====== LOGIN ====== */
 #loginPage {
   position:fixed; inset:0; z-index:100; display:flex; align-items:center; justify-content:center;
-  background: url('rk health img.png') center/cover no-repeat;
+  background: url('../assets/rk health img.png') center/cover no-repeat;
 }
 #loginPage::before {
   content:''; position:absolute; inset:0; z-index:0;
