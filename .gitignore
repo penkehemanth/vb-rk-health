@@ -15,5 +15,9 @@ __pycache__/
 .vscode/
 .idea/
 
-# Project docs (not for deployment)
-docs/
+# Temporary/locked Office files
+~$*
+
+# Old folders (replaced by documentation/)
+document/
+RK-HEALTH_Phase_Wise_Documents/
