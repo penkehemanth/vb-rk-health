@@ -4,7 +4,7 @@ This repository is organized into three folders:
 
 | Folder | Contents |
 |--------|----------|
-| **documentation/** | Project documentation, templates, and phase-wise docs |
+| **document/** | Project documentation — phase-wise templates and presentation guide |
 | **project/** | Full application source code (frontend, backend, assets) |
 | **video/** | Demo screen recording of the application |
 
